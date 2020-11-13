@@ -1,0 +1,22 @@
+{
+  "name": "kitchen-maker",
+  "version": "1.0.0",
+  "description": "makes kitchens",
+  "main": "app.js",
+  "scripts": {
+    "test": "kmake"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martinjakubik/kitchen-maker.git"
+  },
+  "keywords": [
+    "kitchens"
+  ],
+  "author": "martin jakubik",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/martinjakubik/kitchen-maker/issues"
+  },
+  "homepage": "https://github.com/martinjakubik/kitchen-maker#readme"
+}
