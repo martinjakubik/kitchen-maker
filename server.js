@@ -23,6 +23,24 @@ let getDefaultIfBlankPath = function (sPath) {
     return sDefaultPath;
 }
 
+let getContentType = function (sPath) {
+    let sContentType = 'text/plain';
+
+    if (process.platform === 'win32' && sPath === '.\\index.html') {
+        sContentType = "text/html";
+    } else if (sPath === './index.html') {
+        sContentType = "text/html";
+    } else if (sPath.includes("/css/")) {
+        sContentType = "text/css";
+    } else if (sPath.includes("/html/")) {
+        sContentType = "text/html";
+    } else if (sPath.includes("/js/")) {
+        sContentType = "application/javascript";
+    }
+
+    return sContentType;
+}
+
 oHttp.createServer(function (oRequest, oResponse) {
     try {
         let oRequestUrl = oUrl.parse(oRequest.url);
@@ -31,21 +49,10 @@ oHttp.createServer(function (oRequest, oResponse) {
 
         // need to use oPath.normalize so people can't access directories underneath sBaseDirectory
         let sFSPath = sBaseDirectory + oPath.normalize(sPath);
-        console.log("normalized path: \"" + sFSPath + "\"");
 
         let sFinalPath = getDefaultIfBlankPath(sFSPath);
 
-        console.log("default path: \"" + sFinalPath + "\"");
-
-        let sContentType = "text/plain";
-
-        if (sFinalPath.includes("/css/")) {
-            sContentType = "text/css";
-        } else if (sFinalPath.includes("/html/")) {
-            sContentType = "text/html";
-        } else if (sFinalPath.includes("/js/")) {
-            sContentType = "application/javascript";
-        }
+        let sContentType = getContentType(sFinalPath);
 
         let oHeaders =  {
            "Content-Type": sContentType
@@ -68,4 +75,4 @@ oHttp.createServer(function (oRequest, oResponse) {
     }
 }).listen(nPort);
 
-console.log("listening on nPort \"" + nPort + "\"");
+console.log("listening on port \"" + nPort + "\"");
