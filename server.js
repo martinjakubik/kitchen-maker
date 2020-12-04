@@ -1,22 +1,22 @@
-var oHttp = require("http");
-var oUrl = require("url");
-var oFs = require("fs");
-var oPath = require("path");
-var sBaseDirectory = ".";
+let oHttp = require("http");
+let oUrl = require("url");
+let oFs = require("fs");
+let oPath = require("path");
+let sBaseDirectory = ".";
 
-var port = 8080;
+let port = 8080;
 
 oHttp.createServer(function (oRequest, oResponse) {
   try {
-    var oRequestUrl = oUrl.parse(oRequest.url);
+    let oRequestUrl = oUrl.parse(oRequest.url);
 
-    var sPath = oRequestUrl.pathname;
+    let sPath = oRequestUrl.pathname;
 
     // need to use oPath.normalize so people can't access directories underneath sBaseDirectory
-    var sFSPath = sBaseDirectory + oPath.normalize(sPath);
+    let sFSPath = sBaseDirectory + oPath.normalize(sPath);
     console.log("path: \"" + sFSPath + "\"");
 
-    var sContentType = "text/plain";
+    let sContentType = "text/plain";
     
     if (sFSPath.includes("/css/")) {
         sContentType = "text/css";
@@ -26,12 +26,12 @@ oHttp.createServer(function (oRequest, oResponse) {
         sContentType = "application/javascript";
     }
 
-    var oHeaders =  {
+    let oHeaders =  {
        "Content-Type": sContentType
     };
 
     oResponse.writeHead(200, oHeaders);
-    var oFileStream = oFs.createReadStream(sFSPath);
+    let oFileStream = oFs.createReadStream(sFSPath);
     oFileStream.pipe(oResponse);
     oFileStream.on('error' ,function(e) {
         // assumes the file doesn't exist
