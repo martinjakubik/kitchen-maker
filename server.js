@@ -6,6 +6,23 @@ let sBaseDirectory = ".";
 
 let nPort = 8080;
 
+let getDefaultIfBlankPath = function (sPath) {
+    let sDefaultPath = sPath;
+
+    if (process.platform === 'win32') {
+        console.log('we\'re on windows');
+        if (sPath === '.\\') {
+            sDefaultPath = '.\\index.html';
+        }
+    } else {
+        if (sPath === './') {
+            sDefaultPath = './index.html';
+        }
+    }
+
+    return sDefaultPath;
+}
+
 oHttp.createServer(function (oRequest, oResponse) {
     try {
         let oRequestUrl = oUrl.parse(oRequest.url);
@@ -16,26 +33,17 @@ oHttp.createServer(function (oRequest, oResponse) {
         let sFSPath = sBaseDirectory + oPath.normalize(sPath);
         console.log("normalized path: \"" + sFSPath + "\"");
 
-        if (process.platform === 'win32') {
-            console.log('we\'re on windows');
-            if (sFSPath === '.\\') {
-                sFSPath = '.\\index.html';
-            }
-        } else {
-            if (sFSPath === './') {
-                sFSPath = './index.html';
-            }
-        }
+        let sFinalPath = getDefaultIfBlankPath(sFSPath);
 
-        console.log("transformed path: \"" + sFSPath + "\"");
+        console.log("default path: \"" + sFinalPath + "\"");
 
         let sContentType = "text/plain";
 
-        if (sFSPath.includes("/css/")) {
+        if (sFinalPath.includes("/css/")) {
             sContentType = "text/css";
-        } else if (sFSPath.includes("/html/")) {
+        } else if (sFinalPath.includes("/html/")) {
             sContentType = "text/html";
-        } else if (sFSPath.includes("/js/")) {
+        } else if (sFinalPath.includes("/js/")) {
             sContentType = "application/javascript";
         }
 
@@ -44,7 +52,7 @@ oHttp.createServer(function (oRequest, oResponse) {
         };
 
         oResponse.writeHead(200, oHeaders);
-        let oFileStream = oFs.createReadStream(sFSPath);
+        let oFileStream = oFs.createReadStream(sFinalPath);
         oFileStream.pipe(oResponse);
         oFileStream.on('error' ,function(e) {
             // assumes the file doesn't exist
