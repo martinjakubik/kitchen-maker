@@ -4,7 +4,7 @@ let oFs = require("fs");
 let oPath = require("path");
 let sBaseDirectory = ".";
 
-let nPort = 8080;
+let nPort = 1995;
 
 let getDefaultIfBlankPath = function (sPath) {
     let sDefaultPath = sPath;
