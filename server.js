@@ -15,7 +15,7 @@ oHttp.createServer(function (oRequest, oResponse) {
     // need to use oPath.normalize so people can't access directories underneath sBaseDirectory
     let sFSPath = sBaseDirectory + oPath.normalize(sPath);
     console.log("normalized path: \"" + sFSPath + "\"");
-    
+
     if (process.platform === 'win32') {
       console.log('we\'re on windows');
       if (sFSPath === '.\\') {
@@ -30,7 +30,7 @@ oHttp.createServer(function (oRequest, oResponse) {
     console.log("transformed path: \"" + sFSPath + "\"");
 
     let sContentType = "text/plain";
-    
+
     if (sFSPath.includes("/css/")) {
         sContentType = "text/css";
     } else if (sFSPath.includes("/html/")) {
