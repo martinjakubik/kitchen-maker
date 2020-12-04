@@ -4,7 +4,7 @@ var oFs = require("fs");
 var oPath = require("path");
 var sBaseDirectory = ".";
 
-var port = 1995;
+var port = 8080;
 
 oHttp.createServer(function (oRequest, oResponse) {
    try {
