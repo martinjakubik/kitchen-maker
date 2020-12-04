@@ -10,7 +10,6 @@ let getDefaultIfBlankPath = function (sPath) {
     let sDefaultPath = sPath;
 
     if (process.platform === 'win32') {
-        console.log('we\'re on windows');
         if (sPath === '.\\') {
             sDefaultPath = '.\\index.html';
         }
