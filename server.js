@@ -4,7 +4,9 @@ let oFs = require("fs");
 let oPath = require("path");
 let sBaseDirectory = ".";
 
-let port = 8080;
+let nPort = 8080;
+
+let 
 
 oHttp.createServer(function (oRequest, oResponse) {
   try {
@@ -45,6 +47,6 @@ oHttp.createServer(function (oRequest, oResponse) {
      oResponse.end();
      console.log(e.stack)
   }
-}).listen(port);
+}).listen(nPort);
 
-console.log("listening on port \"" + port + "\"");
+console.log("listening on nPort \"" + nPort + "\"");
