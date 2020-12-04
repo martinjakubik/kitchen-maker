@@ -1,1 +1,1 @@
-console.log('let\'s make some kitchens!!');
+console.log('let\'s make some kitchens!');
