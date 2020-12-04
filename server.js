@@ -6,8 +6,6 @@ let sBaseDirectory = ".";
 
 let nPort = 8080;
 
-let 
-
 oHttp.createServer(function (oRequest, oResponse) {
   try {
     let oRequestUrl = oUrl.parse(oRequest.url);
@@ -16,7 +14,20 @@ oHttp.createServer(function (oRequest, oResponse) {
 
     // need to use oPath.normalize so people can't access directories underneath sBaseDirectory
     let sFSPath = sBaseDirectory + oPath.normalize(sPath);
-    console.log("path: \"" + sFSPath + "\"");
+    console.log("normalized path: \"" + sFSPath + "\"");
+    
+    if (process.platform === 'win32') {
+      console.log('we\'re on windows');
+      if (sFSPath === '.\\') {
+        sFSPath = '.\\index.html';
+      }
+    } else {
+      if (sFSPath === './') {
+        sFSPath = './index.html';
+      }
+    }
+
+    console.log("transformed path: \"" + sFSPath + "\"");
 
     let sContentType = "text/plain";
     
