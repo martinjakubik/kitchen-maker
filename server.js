@@ -72,6 +72,7 @@ oHttp.createServer(function (oRequest, oResponse) {
         oResponse.end();
         console.log(e.stack)
     }
-}).listen(nPort);
+
+}).listen(process.env.PORT || nPort);
 
 console.log(`listening on port '${nPort}'`);
